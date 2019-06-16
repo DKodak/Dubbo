@@ -1,0 +1,29 @@
+<!--<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+       <!--xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"-->
+       <!--xmlns="http://www.springframework.org/schema/beans"-->
+       <!--xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd-->
+       <!--http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">-->
+    <!--&lt;!&ndash;1  指定当前服务/应用的名字 （同样的服务名字相同，不用和别的服务同名）&ndash;&gt;-->
+    <!--<dubbo:application  name="boot-user-service-provider"  ></dubbo:application>-->
+
+    <!--&lt;!&ndash;2  指定注册中心的位置&ndash;&gt;-->
+    <!--&lt;!&ndash;<dubbo:registry address="zookeeper://127.0.0.1:2181"></dubbo:registry>&ndash;&gt;-->
+    <!--<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"></dubbo:registry>-->
+
+
+    <!--&lt;!&ndash;3 指定通信规则 （通信协议？通信端口）&ndash;&gt;-->
+    <!--<dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>-->
+
+    <!--&lt;!&ndash;4 暴露服务  ref 指向服务的真正实现对象&ndash;&gt;-->
+    <!--&lt;!&ndash;version 多版本控制&ndash;&gt;-->
+    <!--<dubbo:service interface="com.ht.gmall.service.UserService" ref="UserServiceImpl01" version="1.0.0">-->
+        <!--<dubbo:method name="getUserAddressList" timeout="1000"></dubbo:method>-->
+    <!--</dubbo:service>-->
+    <!--&lt;!&ndash;服务的实现&ndash;&gt;-->
+    <!--<bean id="UserServiceImpl01" class="com.ht.gmall.service.impl.UserServiceImpl" ></bean>-->
+
+
+    <!--&lt;!&ndash;连接监控中心 &ndash;&gt;-->
+    <!--&lt;!&ndash;自动发现&ndash;&gt;-->
+    <!--<dubbo:monitor protocol="registry" ></dubbo:monitor>-->
+<!--</beans>-->

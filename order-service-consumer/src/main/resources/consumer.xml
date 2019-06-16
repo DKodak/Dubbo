@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.ht.gmall.service.impl"></context:component-scan>
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="order-service-consumer"  />
+
+    <!-- 使用zookeeper广播注册中心暴露发现服务地址 -->
+    <dubbo:registry  address="zookeeper://127.0.0.1:2181"></dubbo:registry>
+
+    <!-- 生成远程服务代理，可以和本地bean一样使用demoService
+     check启动时不检查是否启动了提供者
+        1)精确优先（方法及优先，接口级次之，全局配置再次之）
+        2）消费者设置优先（如果级别一样，则消费方优先，提供方次之）
+
+     registry 重试次数  当网络发生延迟失败时会自动重试调用方法 不包含第一次调用
+        幂等性（设置重试次数  查询删除修改） 非幂等 不能设置重试次数 新增
+
+       timeout="3000" （3秒）   默认是1000毫秒
+
+       version指定选使用的版本
+
+       stub本地存根
+     -->
+    <dubbo:reference interface="com.ht.gmall.service.UserService" id="userService"
+        timeout="3000"  version="*" stub="com.ht.gmall.service.impl.UserServiceStub">
+        <!--&lt;!&ndash;指定单独方法的超时时间&ndash;&gt;-->
+            <!--<dubbo:method name="getUserAddressList" timeout="1000"></dubbo:method>-->
+    </dubbo:reference>
+
+    <!--配置当前消费者的统一规则；所有的服务都不检查-->
+    <dubbo:consumer check="false"/>
+
+    <!--连接监控中心 -->
+        <!--自动发现-->
+    <dubbo:monitor protocol="registry" ></dubbo:monitor>
+        <!--指定端口发现-->
+    <!--<dubbo:monitor address="127.0.0.1:7070"/>-->
+</beans>
